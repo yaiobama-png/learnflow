@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { supabase } from './supabaseClient';
 import './Login.css';
 
-function Login({ onLogin }) {
+function Login({ onLogin, theme = 'dark', setTheme }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -34,6 +34,15 @@ function Login({ onLogin }) {
 
   return (
     <div className="login-page">
+      <button
+        type="button"
+        className="theme-toggle login-theme-toggle"
+        onClick={() => setTheme?.((current) => current === 'dark' ? 'light' : 'dark')}
+        aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+      >
+        <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
+        <span>{theme === 'dark' ? 'Light mode' : 'Dark mode'}</span>
+      </button>
       <form className="login-card" onSubmit={handleLogin}>
         <div className="login-logo">
           <div className="login-logo-icon">L</div>

@@ -416,3 +416,28 @@
     gap: 5px;
   }
 }
+
+/* Premium calendar visual polish */
+.calendar-card, .calendar-selected-card {
+  border-color: #e7eaf2;
+  border-radius: 18px;
+  box-shadow: 0 2px 8px rgba(24, 35, 56, 0.035), 0 1px 2px rgba(24, 35, 56, 0.025);
+}
+.calendar-day { border-radius: 10px; }
+.calendar-day.selected { background: #f0f2ff; border-color: #cbd3ff; }
+.calendar-day.selected .calendar-day-number {
+  background: linear-gradient(135deg, #6579ed, #4055cb);
+  box-shadow: 0 3px 8px rgba(79, 99, 217, 0.2);
+}
+.calendar-view-button, .calendar-today-button {
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+.calendar-view-button {
+  background: linear-gradient(135deg, #5b70e4, #465bd0);
+  box-shadow: 0 4px 10px rgba(79, 99, 217, 0.16);
+}
+.calendar-view-button:hover {
+  background: linear-gradient(135deg, #4e63d6, #3e52c2);
+  box-shadow: 0 6px 14px rgba(79, 99, 217, 0.22);
+  transform: translateY(-1px);
+}
