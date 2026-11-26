@@ -30,6 +30,10 @@ function getDuration(start, end) {
 function App() {
   const [session, setSession] = useState(null);
   const [authLoading, setAuthLoading] = useState(true);
+  const [theme, setTheme] = useState(() => {
+    try { return localStorage.getItem('learnflow-theme') === 'light' ? 'light' : 'dark'; }
+    catch { return 'dark'; }
+  });
 
   const [activities, setActivities] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -67,6 +71,13 @@ function App() {
   };
 
   const [newActivity, setNewActivity] = useState(emptyActivity);
+
+  // Apply and persist the selected appearance across sessions.
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    try { localStorage.setItem('learnflow-theme', theme); } catch { /* storage may be unavailable */ }
+  }, [theme]);
 
   // Authentication
   useEffect(() => {
@@ -600,7 +611,7 @@ function App() {
   }
 
   if (!session) {
-    return <Login />;
+    return <Login theme={theme} setTheme={setTheme} />;
   }
 
   // Daily statistics
@@ -848,7 +859,19 @@ function App() {
             </p>
           </div>
 
-          <div className="today-badge">✦ Personal Journal</div>
+          <div className="topbar-actions">
+            <button
+              type="button"
+              className="theme-toggle"
+              onClick={() => setTheme((current) => current === 'dark' ? 'light' : 'dark')}
+              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+            >
+              <span aria-hidden="true">{theme === 'dark' ? '☀' : '☾'}</span>
+              <span>{theme === 'dark' ? 'Light mode' : 'Dark mode'}</span>
+            </button>
+            <div className="today-badge">✦ Personal Journal</div>
+          </div>
         </header>
 
         {/* DASHBOARD */}
